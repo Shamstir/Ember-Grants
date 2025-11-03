@@ -1,0 +1,45 @@
+<<<<<<< HEAD
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+=======
+/blockchain/node_modules
+.env
+
+# Hardhat files
+/blockchain/cache
+/blockchain/artifacts
+
+# TypeChain files
+/blockchain/typechain
+/typechain-types
+
+# solidity-coverage files
+/blockchain/coverage
+/blockchain/coverage.json
+
+# Hardhat Ignition default folder for deployments against a local node
+/blockchain/ignition/deployments/chain-31337
+>>>>>>> a8ef3c0094b2f9d5e3a9d058bdc2356bf507e1d5
