@@ -15,6 +15,14 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Project description is required']
     },
+    imageUrl: {
+        type: String,
+        default: null
+    },
+    imageCid: {
+        type: String,
+        default: null
+    },
     status: {
         type: String,
         enum: ['pending', 'active_voting', 'successful', 'failed'],

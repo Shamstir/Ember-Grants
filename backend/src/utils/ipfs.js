@@ -1,9 +1,17 @@
 import axios from 'axios'
 import FormData from 'form-data'
 import fs from 'fs'
-
+import dotenv from 'dotenv'
+dotenv.config()
 const PINATA_API_KEY = process.env.PINATA_API_KEY;
 const PINATA_API_SECRET_KEY = process.env.PINATA_API_SECRET_KEY;
+
+// Debug: Check if keys are loaded
+console.log('Pinata Keys Check:', {
+    hasApiKey: !!PINATA_API_KEY,
+    hasSecretKey: !!PINATA_API_SECRET_KEY,
+    apiKeyLength: PINATA_API_KEY?.length || 0
+});
 
 export const uploadJSONToIPFS = async (jsonData) => {
     const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;

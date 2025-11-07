@@ -5,6 +5,7 @@ import "./GovernanceToken.sol";
 import "./ProposalNFT.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
 
 contract GrantManager is Ownable {
     
@@ -42,7 +43,10 @@ contract GrantManager is Ownable {
         trustedSigner = _signer;
     }
 
-    
+    // Mint a new proposal NFT
+    function mintProposal(address creator, string memory uri) public onlyOwner {
+        proposalNFT.safeMint(creator, uri);
+    }
 
    
     function startVote(uint256 _nftId) public onlyOwner {
@@ -82,7 +86,8 @@ contract GrantManager is Ownable {
         require(!hasVoted[_nftId][msg.sender], "You have already voted on this proposal.");
 
         bytes32 messageHash = _getVoteMessageHash(_nftId, msg.sender, _contributionWeight);
-        address signer = ECDSA.recover(messageHash, _signature);
+        bytes32 ethSignedMessageHash = MessageHashUtils.toEthSignedMessageHash(messageHash);
+        address signer = ECDSA.recover(ethSignedMessageHash, _signature);
         require(signer == trustedSigner, "Invalid signature: voting weight is not certified.");
 
         require(governanceToken.balanceOf(msg.sender) >= _baseVoteAmount, "Insufficient token balance.");
@@ -107,11 +112,13 @@ contract GrantManager is Ownable {
         bool passed = proposal.totalVotes >= VOTING_THRESHOLD;
 
         if (passed) {
-            //  trigger the fund distribution iska code likhna hai
-            
+            // Transfer funds to project creator
+            uint256 grantAmount = address(this).balance;
+            if (grantAmount > 0) {
+                (bool success, ) = proposal.creator.call{value: grantAmount}("");
+                require(success, "Fund transfer failed");
+            }
         }
-        
-        
 
         emit GrantExecuted(_nftId, passed);
     }

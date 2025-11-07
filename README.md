@@ -1,10 +1,10 @@
-# Decentralized Micro-Grant Funding for Creative Projects (DMCGP) - Initial Repository
+# Decentralized Micro-Grant Funding for Creative Projects (DMCGP)
 
 ## 1. Project Overview
 
-This repository serves as the initial development space for Decentralized Micro-Grant Funding for Creative Projects (DMCGP), a blockchain-based platform designed to revolutionize how creative individuals and small-scale projects access funding.  We aim to create a more transparent, equitable, and community-driven ecosystem by leveraging NFTs, governance tokens, and a novel "Proof-of-Contribution" (PoC) system.
+DMCGP is a fully functional blockchain-based platform that revolutionizes how creative individuals and small-scale projects access funding. The platform leverages NFTs, governance tokens, and a novel "Proof-of-Contribution" (PoC) system to create a transparent, equitable, and community-driven funding ecosystem.
 
-**This repository is currently in the early planning and architectural design phase.**  No functional code exists yet.
+**Status: ✅ Fully Implemented and Ready for Testing**
 
 ## 2. Goals & Vision
 
@@ -13,55 +13,182 @@ This repository serves as the initial development space for Decentralized Micro-
 *   **Promote Transparency & Accountability:** Leverage blockchain technology to ensure a transparent and auditable funding process.
 *   **Reward Contribution & Collaboration:** Incentivize community members to contribute their skills and expertise.
 
-## 3. Architectural Overview (Conceptual)
+## 3. Architecture Overview
 
-The DMCGP platform will consist of the following key components:
+The DMCGP platform consists of three integrated components:
 
-*   **Smart Contracts (Solidity):**  Responsible for managing project proposals (NFTs), governance token distribution, voting logic, and micro-grant disbursement.
-*   **Decentralized Storage (IPFS/Arweave):**  Used to store project assets, metadata, and verifiable credentials.
-*   **Frontend (React/Vue.js):**  Provides a user-friendly interface for project submission, voting, contribution tracking, and wallet integration.
-*   **Verifiable Credentials (VC) System:**  A system for issuing and verifying credentials documenting contributions to projects. We are exploring integration with existing VC standards (W3C).
-*   **Governance Token:**  A token that grants voting rights and incentivizes community participation.
+### Frontend (React + TypeScript + Vite)
+*   Modern, responsive UI with TailwindCSS
+*   MetaMask wallet integration
+*   Signature-based authentication
+*   Project browsing, creation, and management
+*   Real-time blockchain interaction
+*   Governance token dashboard
 
-## 4. Getting Started (Development Environment Setup)
+### Backend (Node.js + Express + MongoDB)
+*   RESTful API with JWT authentication
+*   MongoDB for off-chain data storage
+*   IPFS integration via Pinata
+*   Blockchain interaction utilities
+*   Proof-of-Contribution tracking
+*   W3C Verifiable Credentials issuance
 
-**This repository is currently in the planning phase.  The following steps outline the intended development environment setup.**
+### Blockchain (Solidity + Hardhat)
+*   **GovernanceToken (ERC20):** 1M supply governance token
+*   **ProposalNFT (ERC721):** NFT representation of projects
+*   **GrantManager:** Voting logic, fund distribution, PoC verification
+*   Deployed on Hardhat local network (testnet/mainnet ready)
 
-1.  **Prerequisites:**
-    *   Node.js (version 16 or higher)
-    *   npm or yarn package manager
-    *   Truffle/Hardhat (for smart contract development)
-    *   Ganache or Hardhat Network (local blockchain for testing)
-    *   MetaMask or similar wallet extension
+## 4. Quick Start
 
-2.  **Project Structure (Intended):**
-    ```
-    dmcgp/
-    ├── contracts/         # Smart contract source code (Solidity)
-    │   └── ...
-    ├── frontend/          # Frontend application source code (React/Vue.js)
-    │   └── ...
-    ├── scripts/          # Scripts for deploying and interacting with smart contracts
-    │   └── ...
-    ├── test/             # Unit tests for smart contracts
-    │   └── ...
-    ├── docs/            # Project documentation (architecture, design decisions)
-    │   └── ...
-    ├── README.md       # This file
-    ```
+### Prerequisites
+*   Node.js (v16+)
+*   MongoDB (v4.4+)
+*   MetaMask browser extension
 
-3.  **Initial Setup (Future Steps):**
-    *   `npm init -y` or `yarn init -y` (to initialize a Node.js project)
-    *   Install necessary dependencies (Truffle/Hardhat, web3.js or ethers.js)
-    *   Create a basic smart contract structure (e.g., using Truffle Box or Hardhat template)
-    *   Set up a local blockchain environment (Ganache or Hardhat Network)
+### Installation
 
-## 5. Contributing
+```bash
+# Clone the repository
+git clone <repo-url>
+cd Ember-Grants
 
-We welcome contributions to this project!  As we are in the early planning stages, initial contributions will likely focus on:
+# Install all dependencies
+cd backend && npm install
+cd ../frontend && npm install
+cd ../blockchain && npm install
+```
 
-*   **Architecture Design:** Refining the overall system architecture and identifying key design decisions.
-*   **Smart Contract Specification:** Detailing the functionality of each smart contract component.
-*   **Frontend Mockups:** Creating basic mockups to visualize the user interface.
+### Setup & Run
+
+**1. Start MongoDB**
+```bash
+mongod
+```
+
+**2. Deploy Smart Contracts**
+```bash
+cd blockchain
+cp .env.example .env
+npx hardhat node  # In one terminal
+npx hardhat run scripts/deploy.js --network localhost  # In another
+```
+
+**3. Configure Environment**
+- Copy contract addresses from deployment output
+- Update `backend/.env` and `frontend/.env` with addresses
+
+**4. Start Backend**
+```bash
+cd backend
+cp .env.example .env  # Edit with your config
+npm run dev
+```
+
+**5. Start Frontend**
+```bash
+cd frontend
+cp .env.example .env  # Edit with contract addresses
+npm run dev
+```
+
+**6. Access Application**
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:3000
+- Connect MetaMask to Hardhat network (Chain ID: 1337)
+
+See [SETUP.md](./SETUP.md) for detailed instructions.
+
+## 5. Key Features
+
+### ✅ Implemented Features
+
+**User Authentication**
+- MetaMask wallet connection
+- Signature-based authentication
+- JWT token management
+
+**Project Management**
+- Create and submit projects
+- Automatic NFT minting
+- IPFS metadata storage
+- Project status tracking
+
+**Governance & Voting**
+- ERC20 governance token (DMCG)
+- Token-weighted voting
+- 7-day voting periods
+- Automatic fund distribution
+
+**Proof-of-Contribution System**
+- Contribution submission and tracking
+- Verification workflow
+- W3C Verifiable Credentials
+- Contribution-weighted voting power
+- IPFS credential storage
+
+**Blockchain Integration**
+- Smart contract deployment scripts
+- Contract interaction utilities
+- Event listening and indexing
+- Transaction management
+
+## 6. Technology Stack
+
+**Frontend**
+- React 18 + TypeScript
+- Vite build tool
+- TailwindCSS for styling
+- ethers.js for blockchain
+- React Router for navigation
+- Lucide React for icons
+
+**Backend**
+- Node.js + Express
+- MongoDB + Mongoose
+- ethers.js for contracts
+- JWT authentication
+- Pinata for IPFS
+
+**Blockchain**
+- Solidity 0.8.20
+- Hardhat development
+- OpenZeppelin contracts
+- ERC20 & ERC721 standards
+
+## 7. Smart Contracts
+
+### GovernanceToken.sol
+ERC20 token with 1,000,000 initial supply for governance voting.
+
+### ProposalNFT.sol
+ERC721 NFT representing project proposals with IPFS metadata.
+
+### GrantManager.sol
+Core contract managing:
+- Voting lifecycle
+- Contribution weight verification
+- Fund distribution
+- Grant execution
+
+## 8. API Documentation
+
+See [SETUP.md](./SETUP.md) for complete API endpoint documentation.
+
+## 9. Contributing
+
+Contributions are welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 10. License
+
+MIT License - See LICENSE file for details
+
+## 11. Contact
+
+For questions or support, please open an issue on GitHub.
 
 

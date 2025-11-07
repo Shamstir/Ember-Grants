@@ -19,7 +19,7 @@ contract ProposalNFT is ERC721, ERC721URIStorage, Ownable {
         _safeMint(creator, tokenId);
         _setTokenURI(tokenId, uri);
     }
- 
+
     function tokenURI(uint256 tokenId) 
         public 
         view 
